@@ -151,5 +151,51 @@ namespace LambdaChaosInjection.Tests
 
         Assert.Equal(200, response.StatusCode);
     }
+
+    [Fact]
+    public async Task IsMyFailureRateTestWorking()
+    {
+        // Arrange
+        var c = new ChaosWrap<InjectDelay>();
+        
+        // Act
+        
+        double countOfSuccess= 0;
+        double countOfSuccess2= 0;
+        double countOfSuccess9= 0;
+
+        c.CurrentPolicy.Rate = 0.1;
+        for (int i = 0; i < 100000; i++)
+        {
+            if (c.CurrentPolicy.RateOfFailureTestMet())
+            {
+                countOfSuccess++;
+            }
+        }
+        
+        c.CurrentPolicy.Rate = 0.2;
+        for (int i = 0; i < 100000; i++)
+        {
+            if (c.CurrentPolicy.RateOfFailureTestMet())
+            {
+                countOfSuccess2++;
+            }
+        }
+        
+        c.CurrentPolicy.Rate = 0.9;
+        for (int i = 0; i < 100000; i++)
+        {
+            if (c.CurrentPolicy.RateOfFailureTestMet())
+            {
+                countOfSuccess9++;
+            }
+        }
+        
+        // Assert
+        Assert.InRange(countOfSuccess/100000,0.09,0.11);
+        Assert.InRange(countOfSuccess2/100000,0.19,0.21);
+        Assert.InRange(countOfSuccess9/100000, 0.89,0.91);
+        
+    }
   }
 }

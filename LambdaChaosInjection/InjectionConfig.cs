@@ -17,6 +17,21 @@ namespace LambdaChaosInjection
             ExceptionMsg = exceptionMsg;
             Rate = rate;
         }
+        /// <summary>
+        /// This method is used to determine if a chaos injection should happen.
+        /// If the failure rate is set to 0.1 then this function should return true
+        /// 1 in ten times.
+        /// </summary>
+        public bool RateOfFailureTestMet()
+        {
+            var random = new Random();
+            if (random.NextDouble() <= this.Rate)
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         internal TimeSpan DelayTimeSpan => new TimeSpan(0, 0, this.Delay);
         [JsonPropertyName("isEnabled")]
@@ -30,6 +45,6 @@ namespace LambdaChaosInjection
         [JsonPropertyName("exception_msg")]
         public string ExceptionMsg { get; set; }
         [JsonPropertyName("rate")]
-        public int Rate { get; set; }
+        public double Rate { get; set; }
     }
 }

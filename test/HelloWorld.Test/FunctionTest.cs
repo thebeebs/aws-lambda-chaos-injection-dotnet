@@ -169,6 +169,7 @@ namespace LambdaChaosInjection.Tests
         {
             if (c.CurrentPolicy.RateOfFailureTestMet())
             {
+                
                 countOfSuccess++;
             }
         }

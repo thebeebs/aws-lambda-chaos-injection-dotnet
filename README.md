@@ -1,7 +1,117 @@
 ![build and test](https://github.com/thebeebs/LambdaChaosInjection/workflows/build%20and%20test/badge.svg)
 
+# Chaos Injection for AWS Lambda - ChaosLambdaInjection
 
-# Files
+ChaosLambdaInjection is a small library injecting chaos into AWS Lambda. 
+It offers simple decorators to do delay, exception and statusCode injection 
+and some methods to add delay to any 3rd party dependencies called from your function. 
+This allows to conduct small chaos engineering experiments 
+for your serverless application in the AWS Cloud.
+
+- Support for Latency injection using delay
+- Support for Exception injection using exception_msg
+- Support for HTTP Error status code injection using error_code
+- Using for SSM Parameter Store to control the experiment using isEnabled
+- Support for adding rate of failure using rate. (Default rate = 1)
+- Per Lambda function injection control using Environment variable (CHAOS_PARAM)
+
+## Install
+```bash
+dotnet add package LambdaChaosInjection --version 0.1.1
+```
+
+## Example
+We can add a decorator to a function to inject a chaos policy
+```csharp
+[InjectDelayPolicy]
+public async Task<APIGatewayProxyResponse> FunctionHandler(APIGatewayProxyRequest apigProxyEvent, ILambdaContext context)
+{
+    var location = await GetCallingIP();
+    var body = new Dictionary<string, string>
+    {
+        {"message", "hello world"},
+        {"location", location}
+    };
+
+    return new APIGatewayProxyResponse
+    {
+        Body = JsonConvert.SerializeObject(body),
+        StatusCode = 200,
+        Headers = new Dictionary<string, string> {{"Content-Type", "application/json"}}
+    };
+}
+```
+Alternatively you can wrap a portion of code in a ChaosWrap. 
+This is ultimately what the decorator is doing anyway and I suspect 
+that is slightly better in terms of performance.   
+
+```csharp
+public async Task<APIGatewayProxyResponse> FunctionHandlerException(APIGatewayProxyRequest apigProxyEvent, ILambdaContext context)
+{
+    return await new ChaosWrap<InjectException>().Execute(async () =>
+        {
+            var location = await GetCallingIP();
+            var body = new Dictionary<string, string>
+            {
+                {"message", "hello world"},
+                {"location", location}
+            };
+
+            return new APIGatewayProxyResponse
+            {
+                Body = JsonConvert.SerializeObject(body),
+                StatusCode = 200,
+                Headers = new Dictionary<string, string> {{"Content-Type", "application/json"}}
+            };
+        }
+    );
+}
+```
+
+## Configuration
+The configuration for the failure injection is stored in the AWS SSM Parameter Store and accessed at runtime by the get_config() function:
+
+{
+    "isEnabled": true,
+    "delay": 400,
+    "error_code": 404,
+    "exception_msg": "I really failed seriously",
+    "rate": 1
+}
+To store the above configuration into SSM using the AWS CLI do the following:
+
+aws ssm put-parameter --region eu-north-1 --name chaoslambda.config --type String --overwrite --value "{ "delay": 400, "isEnabled": true, "error_code": 404, "exception_msg": "I really failed seriously", "rate": 1 }"
+AWS Lambda will need to have IAM access to SSM.
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ssm:DescribeParameters"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ssm:GetParameters",
+                "ssm:GetParameter"
+            ],
+            "Resource": "arn:aws:ssm:eu-north-1:12345678910:parameter/chaoslambda.config"
+        }
+    ]
+}
+
+## Supported Decorators:
+   ChaosLambdaInjection currently supports the following decorators:
+   
+   [InjectDelay] - add delay in the AWS Lambda execution
+   [InjectException] - Raise an exception during the AWS Lambda execution
+   [InjectStatusCode] - force AWS Lambda to return a specific HTTP error code
+
+## Files
 
 This project contains source code and supporting files for the LamdaChaosInjection Nuget package.
 

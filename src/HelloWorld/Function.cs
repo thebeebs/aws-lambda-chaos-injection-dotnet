@@ -50,7 +50,7 @@ namespace HelloWorld
 
         public async Task<APIGatewayProxyResponse> FunctionHandlerException(APIGatewayProxyRequest apigProxyEvent, ILambdaContext context)
         {
-            return await new ChaosWrap<InjectDelay>().Execute(async () =>
+            return await new ChaosWrap<InjectException>().Execute(async () =>
                 {
                     var location = await GetCallingIP();
                     var body = new Dictionary<string, string>

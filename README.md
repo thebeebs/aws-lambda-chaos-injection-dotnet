@@ -17,7 +17,7 @@ for your serverless application in the AWS Cloud.
 
 ## Install
 ```bash
-dotnet add package LambdaChaosInjection --version 0.1.1
+dotnet add package LambdaChaosInjection --version 0.1.2
 ```
 
 ## Example

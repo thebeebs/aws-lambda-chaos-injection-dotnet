@@ -1,4 +1,4 @@
-![.NET Core](https://github.com/thebeebs/LambdaChaosInjection/workflows/.NET%20Core/badge.svg)
+![build and test](https://github.com/thebeebs/LambdaChaosInjection/workflows/build%20and%20test/badge.svg)
 
 
 # AWS

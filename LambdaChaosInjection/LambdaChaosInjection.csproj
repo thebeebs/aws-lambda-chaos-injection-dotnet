@@ -3,7 +3,13 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>0.1.1</PackageVersion>
+        <PackageVersion>0.1.2</PackageVersion>
+        <Title>Lambda Chaos Injection</Title>
+        <Authors>thebeebs</Authors>
+        <Description>Chaos Injection library for AWS Lambda</Description>
+        <PackageProjectUrl>https://github.com/thebeebs/LambdaChaosInjection</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/thebeebs/LambdaChaosInjection</RepositoryUrl>
+        <PackageTags>aws,lambda</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>

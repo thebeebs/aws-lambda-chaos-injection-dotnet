@@ -2,10 +2,13 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageVersion>0.1.0</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="Amazon.Lambda.APIGatewayEvents" Version="1.2.0" />
+      <PackageReference Include="AspectInjector" Version="2.3.1" />
       <PackageReference Include="System.Text.Json" Version="4.7.2" />
     </ItemGroup>
 

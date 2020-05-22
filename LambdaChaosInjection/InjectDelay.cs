@@ -8,10 +8,11 @@ namespace LambdaChaosInjection
     {
         public InjectionConfig InjectionConfig { get; set; }
 
-        public Task<APIGatewayProxyResponse> Execute(Func<Task<APIGatewayProxyResponse>> func)
+        public Task<T> Execute<T>(Func<Task<T>> func)
         {
-           
+            Console.WriteLine($"Adding delay of {InjectionConfig.DelayTimeSpan.TotalMilliseconds} milliseconds");
             Task.Delay(InjectionConfig.DelayTimeSpan).Wait();
+            Console.WriteLine($"Delay complete, now invoking function");
             return func.Invoke();
         }
     }

@@ -9,20 +9,19 @@ namespace LambdaChaosInjection
     public class InjectException : IInjection
     {
         public InjectionConfig InjectionConfig { get; set; }
-
-        public async Task<APIGatewayProxyResponse> Execute(Func<Task<APIGatewayProxyResponse>> func)
+        
+        public async Task<T> Execute<T>(Func<Task<T>> func)
         {
             var body = new Dictionary<string, string>
                 {
                     {"message", InjectionConfig.ExceptionMsg},
                 };
 
-                return new APIGatewayProxyResponse
-                {
-                    Body = JsonConvert.SerializeObject(body),
-                    StatusCode = InjectionConfig.ErrorCode,
-                    Headers = new Dictionary<string, string> {{"Content-Type", "application/json"}}
-                };
+            dynamic execute = new APIGatewayProxyResponse();
+            execute.Body = JsonConvert.SerializeObject(body);
+            execute.StatusCode = InjectionConfig.ErrorCode;
+            execute.Headers = new Dictionary<string, string> {{"Content-Type", "application/json"}};
+            return execute;
         }
     }
 }

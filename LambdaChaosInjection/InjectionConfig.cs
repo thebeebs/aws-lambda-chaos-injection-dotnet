@@ -33,7 +33,7 @@ namespace LambdaChaosInjection
             return false;
         }
 
-        internal TimeSpan DelayTimeSpan => new TimeSpan(0, 0, this.Delay);
+        internal TimeSpan DelayTimeSpan => new TimeSpan(0, 0, 0,0, this.Delay);
         [JsonPropertyName("isEnabled")]
         public bool IsEnabled { get; set; }
         [JsonPropertyName("delay")]

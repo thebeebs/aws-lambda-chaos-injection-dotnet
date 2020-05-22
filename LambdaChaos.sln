@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LambdaChaosInjection", "LambdaChaosInjection\LambdaChaosInjection.csproj", "{E5D93BC5-2B27-4CC2-80A9-AC4275FC43A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LambdaChaosInjection.Tests", "Test\HelloWorld.Test\LambdaChaosInjection.Tests.csproj", "{3A579596-2DA9-46BF-88D7-7E71F72BC45F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LambdaChaosInjection.Tests", "Tests\LambdaChaosInjection.Tests.csproj", "{3A579596-2DA9-46BF-88D7-7E71F72BC45F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld", "Samples\HelloWorld\HelloWorld.csproj", "{C7168A66-50EB-4640-A8CE-7C265EC41A0C}"
 EndProject

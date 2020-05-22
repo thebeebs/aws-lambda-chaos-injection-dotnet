@@ -17,6 +17,8 @@ jobs:
 
       # Publish
       - name: publish on version change
+        env:
+          NUGET_KEY: ${{ secrets.NUGET_KEY }}
         id: publish_nuget
         uses: rohith/publish-nuget@v2
         with:

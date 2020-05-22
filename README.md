@@ -69,8 +69,8 @@ public async Task<APIGatewayProxyResponse> FunctionHandlerException(APIGatewayPr
 ```
 
 ## Configuration
-The configuration for the failure injection is stored in the AWS SSM Parameter Store and accessed at runtime by the get_config() function:
-
+The configuration for the failure injection is stored in the [AWS SSM Parameter Store](https://aws.amazon.com/ssm/):
+```
 {
     "isEnabled": true,
     "delay": 400,
@@ -78,11 +78,15 @@ The configuration for the failure injection is stored in the AWS SSM Parameter S
     "exception_msg": "I really failed seriously",
     "rate": 1
 }
+```
 To store the above configuration into SSM using the AWS CLI do the following:
 
+```bash
 aws ssm put-parameter --region eu-north-1 --name chaoslambda.config --type String --overwrite --value "{ "delay": 400, "isEnabled": true, "error_code": 404, "exception_msg": "I really failed seriously", "rate": 1 }"
-AWS Lambda will need to have IAM access to SSM.
+```
 
+AWS Lambda will need to have [IAM access to SSM](https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-access.html).
+```
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -103,7 +107,7 @@ AWS Lambda will need to have IAM access to SSM.
         }
     ]
 }
-
+```
 ## Supported Decorators:
    ChaosLambdaInjection currently supports the following decorators:
    
@@ -111,7 +115,7 @@ AWS Lambda will need to have IAM access to SSM.
    [InjectException] - Raise an exception during the AWS Lambda execution
    [InjectStatusCode] - force AWS Lambda to return a specific HTTP error code
 
-## Files
+## Project Files
 
 This project contains source code and supporting files for the LamdaChaosInjection Nuget package.
 

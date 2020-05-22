@@ -111,9 +111,9 @@ AWS Lambda will need to have [IAM access to SSM](https://docs.aws.amazon.com/sys
 ## Supported Decorators:
    ChaosLambdaInjection currently supports the following decorators:
    
-   [InjectDelay] - add delay in the AWS Lambda execution
-   [InjectException] - Raise an exception during the AWS Lambda execution
-   [InjectStatusCode] - force AWS Lambda to return a specific HTTP error code
+- [InjectDelay] - add delay in the AWS Lambda execution
+- [InjectException] - Raise an exception during the AWS Lambda execution
+- [InjectStatusCode] - force AWS Lambda to return a specific HTTP error code
 
 ## Project Files
 
